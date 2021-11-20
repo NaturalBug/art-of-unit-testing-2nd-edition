@@ -2,6 +2,7 @@ using NUnit.Framework;
 
 namespace LogAn.nUnitTests
 {
+    [TestFixture]
     public class LogAnalyzerTests
     {
         [SetUp]
@@ -12,7 +13,9 @@ namespace LogAn.nUnitTests
         [Test]
         public void IsValidLogFileName_BadExtension_ReturnsFalse()
         {
-            Assert.Pass();
+            LogAnalyzer analyzer = new LogAnalyzer();
+            bool result = analyzer.IsVaildLogFileName("filewithbadextension.foo");
+            Assert.False(result);
         }
     }
 }

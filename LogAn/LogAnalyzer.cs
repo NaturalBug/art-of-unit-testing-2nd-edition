@@ -4,7 +4,7 @@
     {
         public bool IsVaildLogFileName(string fileName)
         {
-            if (fileName.EndsWith(".SLF"))
+            if (!fileName.EndsWith(".SLF"))
             {
                 return false;
             }
