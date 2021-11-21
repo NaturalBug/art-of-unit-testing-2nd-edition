@@ -10,21 +10,14 @@ namespace LogAn.nUnitTests
         {
         }
 
-        [Test]
-        public void IsValidLogFileName_BadExtension_ReturnsFalse()
-        {
-            LogAnalyzer analyzer = new LogAnalyzer();
-            bool result = analyzer.IsVaildLogFileName("filewithbadextension.foo");
-            Assert.False(result);
-        }
-
-        [TestCase("filewithgoodextension.SLF")]
-        [TestCase("filewithgoodextension.slf")]
-        public void IsValidLogFileName_ValidExtension_ReturnsTrue(string file)
+        [TestCase("filewithgoodextension.SLF", true)]
+        [TestCase("filewithgoodextension.slf", true)]
+        [TestCase("filewithbadextension.foo", false)]
+        public void IsValidLogFileName_VariousExtension_ChecksThem(string file, bool expected)
         {
             LogAnalyzer analyzer = new LogAnalyzer();
             bool result = analyzer.IsVaildLogFileName(file);
-            Assert.True(result);
+            Assert.AreEqual(expected, result);
         }
     }
 }
