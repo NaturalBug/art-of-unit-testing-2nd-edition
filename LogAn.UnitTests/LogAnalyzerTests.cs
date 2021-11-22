@@ -34,7 +34,8 @@ namespace LogAn.UnitTests
         [Fact]
         public void IsValidLogFileName_EmptyFileName_ThrowsException()
         {
-            Assert.Throws<ArgumentException>(() => analyzer.IsVaildLogFileName(string.Empty));
+            var exception = Assert.Throws<ArgumentException>(() => analyzer.IsVaildLogFileName(string.Empty));
+            Assert.Equal("filename has to be provided", exception.Message);
         }
     }
 }
