@@ -1,3 +1,4 @@
+using FluentAssertions;
 using System;
 using Xunit;
 
@@ -36,6 +37,14 @@ namespace LogAn.UnitTests
         {
             var exception = Assert.Throws<ArgumentException>(() => analyzer.IsVaildLogFileName(string.Empty));
             Assert.Equal("filename has to be provided", exception.Message);
+        }
+
+        [Fact]
+        public void IsValidLogFileName_EmptyFileName_Throws()
+        {
+            Action action = () => analyzer.IsVaildLogFileName(string.Empty);
+
+            action.Should().Throw<ArgumentException>().WithMessage("filename has to be provided");
         }
     }
 }
