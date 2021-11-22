@@ -1,3 +1,4 @@
+using System;
 using Xunit;
 
 namespace LogAn.UnitTests
@@ -28,6 +29,12 @@ namespace LogAn.UnitTests
         {
             bool result = analyzer.IsVaildLogFileName("whatever.SLF");
             Assert.True(result);
+        }
+
+        [Fact]
+        public void IsValidLogFileName_EmptyFileName_ThrowsException()
+        {
+            Assert.Throws<ArgumentException>(() => analyzer.IsVaildLogFileName(string.Empty));
         }
     }
 }
