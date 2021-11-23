@@ -55,7 +55,7 @@ namespace LogAn.nUnitTests
         }
 
         [Test]
-        [Ignore("there is a problem with this test")]
+        [Category("Fast Tests")]
         public void IsValidLogFileName_ValidFile_ReturnsTrue()
         {
 

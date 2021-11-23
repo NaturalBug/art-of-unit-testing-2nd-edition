@@ -51,7 +51,8 @@ namespace LogAn.UnitTests
             action.Should().Throw<ArgumentException>().WithMessage("filename has to be provided");
         }
 
-        [Fact(Skip = "there is a problem with this test")]
+        [Fact]
+        [Trait("Category", "Fast Tests")]
         public void IsValidLogFileName_ValidFile_ReturnsTrue()
         {
 
