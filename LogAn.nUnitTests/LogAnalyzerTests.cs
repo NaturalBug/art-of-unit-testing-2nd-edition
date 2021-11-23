@@ -71,6 +71,16 @@ namespace LogAn.nUnitTests
             Assert.That(ex.Message, Is.EqualTo("filename has to be provided"));
         }
 
+        [Test]
+        public void IsValidFileName_WhenCalled_ChangesWasLastFileNameValid()
+        {
+            LogAnalyzer la = MakeAnalyer();
+
+            la.IsVaildLogFileName("badname.foo");
+
+            Assert.False(la.WasLastFileNameValid);
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer();
