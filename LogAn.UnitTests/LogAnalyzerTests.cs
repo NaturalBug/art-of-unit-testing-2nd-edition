@@ -58,12 +58,14 @@ namespace LogAn.UnitTests
 
         }
 
-        [Fact]
-        public void IsValidFileName_WhenCalled_ChangesWasLastFileNameValid()
+        [Theory]
+        [InlineData("badname.foo", false)]
+        [InlineData("goodfile.slf", true)]
+        public void IsValidLogFileName_WhenCalled_ChangesWasLastFileNameValid(string file, bool expected)
         {
-            analyzer.IsVaildLogFileName("badname.foo");
+            analyzer.IsVaildLogFileName(file);
 
-            Assert.False(analyzer.WasLastFileNameValid);
+            Assert.Equal(expected, analyzer.WasLastFileNameValid);
         }
     }
 }
