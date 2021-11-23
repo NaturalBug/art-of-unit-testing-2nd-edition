@@ -46,6 +46,13 @@ namespace LogAn.nUnitTests
             Assert.Catch<ArgumentException>(() => la.IsVaildLogFileName(string.Empty), "filename has to be provided");
         }
 
+        [Test]
+        [Ignore("there is a problem with this test")]
+        public void IsValidLogFileName_ValidFile_ReturnsTrue()
+        {
+
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer();
