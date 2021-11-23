@@ -12,7 +12,9 @@ namespace LogAn.nUnitTests
         public void IsValidLogFileName_VariousExtension_ChecksThem(string file, bool expected)
         {
             LogAnalyzer la = MakeAnalyer();
+
             bool result = la.IsVaildLogFileName(file);
+
             Assert.AreEqual(expected, result);
         }
 
@@ -20,7 +22,9 @@ namespace LogAn.nUnitTests
         public void IsValidLogFileName_ValidFileLowerCased_ReturnsTrue()
         {
             LogAnalyzer la = MakeAnalyer();
+
             bool result = la.IsVaildLogFileName("whatever.slf");
+
             Assert.IsTrue(result, "filename should be valid!");
         }
 
@@ -28,7 +32,9 @@ namespace LogAn.nUnitTests
         public void IsValidLogFileName_ValidFileUpperCased_ReturnsTrue()
         {
             LogAnalyzer la = MakeAnalyer();
+
             bool result = la.IsVaildLogFileName("whatever.SLF");
+
             Assert.IsTrue(result, "filename should be valid!");
         }
 
@@ -36,6 +42,7 @@ namespace LogAn.nUnitTests
         public void IsValidLogFileName_EmptyFileName_ThrowsException()
         {
             LogAnalyzer la = MakeAnalyer();
+
             Assert.Throws<ArgumentException>(() => la.IsVaildLogFileName(string.Empty), "filename has to be provided");
         }
 
@@ -43,6 +50,7 @@ namespace LogAn.nUnitTests
         public void IsValidLogFileName_EmptyFileName_Throws()
         {
             LogAnalyzer la = MakeAnalyer();
+
             Assert.Catch<ArgumentException>(() => la.IsVaildLogFileName(string.Empty), "filename has to be provided");
         }
 
@@ -57,7 +65,9 @@ namespace LogAn.nUnitTests
         public void IsValidLogFileName_EmptyFileName_ThrowsFluent()
         {
             LogAnalyzer la = MakeAnalyer();
+
             var ex = Assert.Catch<ArgumentException>(() => la.IsVaildLogFileName(string.Empty));
+
             Assert.That(ex.Message, Is.EqualTo("filename has to be provided"));
         }
 

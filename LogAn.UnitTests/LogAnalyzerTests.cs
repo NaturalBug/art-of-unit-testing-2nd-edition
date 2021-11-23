@@ -15,6 +15,7 @@ namespace LogAn.UnitTests
         public void IsValidLogFileName_VariousExtension_ReturnsTrue(string file, bool expected)
         {
             bool result = analyzer.IsVaildLogFileName(file);
+
             Assert.Equal(expected, result);
         }
 
@@ -22,6 +23,7 @@ namespace LogAn.UnitTests
         public void IsValidLogFileName_ValidFileLowerCased_ReturnsTrue()
         {
             bool result = analyzer.IsVaildLogFileName("whatever.slf");
+
             Assert.True(result);
         }
         
@@ -29,6 +31,7 @@ namespace LogAn.UnitTests
         public void IsValidLogFileName_ValidFileUpperCased_ReturnsTrue()
         {
             bool result = analyzer.IsVaildLogFileName("whatever.SLF");
+
             Assert.True(result);
         }
 
@@ -36,6 +39,7 @@ namespace LogAn.UnitTests
         public void IsValidLogFileName_EmptyFileName_ThrowsException()
         {
             var exception = Assert.Throws<ArgumentException>(() => analyzer.IsVaildLogFileName(string.Empty));
+
             Assert.Equal("filename has to be provided", exception.Message);
         }
 
