@@ -12,7 +12,7 @@ namespace LogAn.UnitTests
         [InlineData("filewithgoodextension.SLF", true)]
         [InlineData("filewithgoodextension.slf", true)]
         [InlineData("filewithbadextension.foo", false)]
-        public void IsValidLogFileName_VariousExtension_ReturnsTrue(string file, bool expected)
+        public void IsValidLogFileName_VariousExtension_CheckThem(string file, bool expected)
         {
             bool result = analyzer.IsVaildLogFileName(file);
 
