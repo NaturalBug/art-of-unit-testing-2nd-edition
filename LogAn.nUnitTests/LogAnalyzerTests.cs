@@ -95,6 +95,27 @@ namespace LogAn.nUnitTests
             Assert.True(result);
         }
 
+        [Test]
+        public void IsValidLogFileName_ExtManagerThrowsException_ReturnsFalse()
+        {
+            LogAnalyzer log = new LogAnalyzer(new FakeExtensionManager
+            {
+                WillThrow = new Exception("this is fake")
+            });
+
+            bool result;
+            try
+            {
+                result = log.IsVaildLogFileName("anything.anyextension");
+            }
+            catch
+            {
+                result = false;
+            }
+
+            Assert.False(result);
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer(new FileExtensionManager());
@@ -105,8 +126,14 @@ namespace LogAn.nUnitTests
     {
         public bool WillBeValid = false;
 
+        public Exception WillThrow = null;
+
         public bool IsValid(string fileName)
         {
+            if (WillThrow != null)
+            {
+                throw WillThrow;
+            }
             return WillBeValid;
         }
     }
