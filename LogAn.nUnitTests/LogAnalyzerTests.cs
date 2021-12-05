@@ -82,9 +82,32 @@ namespace LogAn.nUnitTests
             Assert.AreEqual(expected, la.WasLastFileNameValid);
         }
 
+        [Test]
+        public void IsValidLogFileName_NameSupportedExtension_ReturnsTrue()
+        {
+            LogAnalyzer log = new LogAnalyzer(new FakeExtensionManager
+            {
+                WillBeValid = true
+            });
+
+            bool result = log.IsVaildLogFileName("short.ext");
+
+            Assert.True(result);
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
-            return new LogAnalyzer();
+            return new LogAnalyzer(new FileExtensionManager());
+        }
+    }
+
+    internal class FakeExtensionManager : IExtensionManager
+    {
+        public bool WillBeValid = false;
+
+        public bool IsValid(string fileName)
+        {
+            return WillBeValid;
         }
     }
 }

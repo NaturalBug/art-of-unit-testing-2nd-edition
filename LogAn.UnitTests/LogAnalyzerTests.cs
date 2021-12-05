@@ -6,7 +6,7 @@ namespace LogAn.UnitTests
 {
     public class LogAnalyzerTests
     {
-        private readonly LogAnalyzer analyzer = new LogAnalyzer();
+        private readonly LogAnalyzer analyzer = new LogAnalyzer(new FileExtensionManager());
         
         [Theory]
         [InlineData("filewithgoodextension.SLF", true)]
@@ -66,6 +66,29 @@ namespace LogAn.UnitTests
             analyzer.IsVaildLogFileName(file);
 
             Assert.Equal(expected, analyzer.WasLastFileNameValid);
+        }
+
+        [Fact]
+        public void IsValidLogFileName_NameSupportedExtension_ReturnsTrue()
+        {
+            LogAnalyzer log = new LogAnalyzer(new FakeExtensionManager
+            {
+                WillBeValid = true
+            });
+
+            bool result = log.IsVaildLogFileName("short.ext");
+
+            Assert.True(result);
+        }
+    }
+
+    internal class FakeExtensionManager : IExtensionManager
+    {
+        public bool WillBeValid = false;
+
+        public bool IsValid(string fileName)
+        {
+            return WillBeValid;
         }
     }
 }

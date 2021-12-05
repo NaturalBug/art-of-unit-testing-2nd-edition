@@ -1,6 +1,6 @@
 ﻿namespace LogAn
 {
-    internal interface IExtensionManager
+    public interface IExtensionManager
     {
         bool IsValid(string fileName);
     }
