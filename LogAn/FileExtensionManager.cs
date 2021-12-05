@@ -2,7 +2,7 @@
 
 namespace LogAn
 {
-    class FileExtensionManager
+    internal class FileExtensionManager
     {
         public bool IsValid(string fileName)
         {
