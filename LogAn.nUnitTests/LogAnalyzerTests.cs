@@ -85,10 +85,11 @@ namespace LogAn.nUnitTests
         [Test]
         public void IsValidLogFileName_NameSupportedExtension_ReturnsTrue()
         {
-            LogAnalyzer log = new LogAnalyzer(new FakeExtensionManager
+            ExtensionManagerFactory.SetManager(new FakeExtensionManager
             {
                 WillBeValid = true
             });
+            LogAnalyzer log = new LogAnalyzer();
 
             bool result = log.IsVaildLogFileName("short.ext");
 
