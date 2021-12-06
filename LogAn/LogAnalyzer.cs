@@ -36,12 +36,13 @@ namespace LogAn
     {
         public bool IsValidLogFileName(string fileName)
         {
-            return GetManager().IsValid(fileName);
+            return IsValid(fileName);
         }
 
-        protected virtual IExtensionManager GetManager()
+        protected virtual bool IsValid(string fileName)
         {
-            return new FileExtensionManager();
+            FileExtensionManager mgr = new FileExtensionManager();
+            return mgr.IsValid(fileName);
         }
     }
 }

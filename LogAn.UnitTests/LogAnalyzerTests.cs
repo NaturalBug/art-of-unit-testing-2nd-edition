@@ -104,31 +104,30 @@ namespace LogAn.UnitTests
         }
 
         [Fact]
-        public void OverrideTest()
+        public void OverrideTestWithoutStub()
         {
-            TestableLogAnalyzer logan = new TestableLogAnalyzer(new FakeExtensionManager
+            TestableLogAnalyzer logan = new TestableLogAnalyzer
             {
-                WillBeValid = true
-            });
+                IsSupported = true
+            };
 
             bool result = logan.IsValidLogFileName("file.ext");
 
-            Assert.True(result);
+            Assert.True(result, "...");
         }
     }
 
     internal class TestableLogAnalyzer : LogAnalyzerUsingFactoryMethod
     {
-        public IExtensionManager Manager;
+        public bool IsSupported;
 
-        public TestableLogAnalyzer(IExtensionManager mgr)
+        public TestableLogAnalyzer()
         {
-            Manager = mgr;
         }
 
-        protected override IExtensionManager GetManager()
+        protected override bool IsValid(string fileName)
         {
-            return Manager;
+            return IsSupported;
         }
     }
 
