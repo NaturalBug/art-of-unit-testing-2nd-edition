@@ -8,7 +8,7 @@ namespace LogAn
     public class LogAnalyzer
     {
         private readonly IExtensionManager manager;
-        private IWebService service;
+        private readonly IWebService service;
 
         public bool WasLastFileNameValid { get; set; }
 
