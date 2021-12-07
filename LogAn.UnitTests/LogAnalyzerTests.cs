@@ -115,6 +115,28 @@ namespace LogAn.UnitTests
 
             Assert.True(result, "...");
         }
+
+        [Fact]
+        public void Analyze_TooShortFileName_CallWebService()
+        {
+            FakeWebService mockService = new FakeWebService();
+            LogAnalyzer log = new LogAnalyzer(mockService);
+            string tooShortFileName = "abc.ext";
+
+            log.Analyze(tooShortFileName);
+
+            Assert.Equal("Filename too short:abc.ext", mockService.LastError);
+        }
+    }
+
+    internal class FakeWebService : IWebService
+    {
+        public string LastError; 
+
+        public void LogError(string message)
+        {
+            LastError = message;
+        }
     }
 
     internal class TestableLogAnalyzer : LogAnalyzerUsingFactoryMethod

@@ -128,9 +128,31 @@ namespace LogAn.nUnitTests
             Assert.True(result, "...");
         }
 
+        [Test]
+        public void Analyze_TooShortFileName_CallWebService()
+        {
+            FakeWebService mockService = new FakeWebService();
+            LogAnalyzer log = new LogAnalyzer(mockService);
+            string tooShortFileName = "abc.ext";
+
+            log.Analyze(tooShortFileName);
+
+            StringAssert.Contains("Filename too short:abc.ext", mockService.LastError);      
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer(new FileExtensionManager());
+        }
+    }
+
+    internal class FakeWebService : IWebService
+    {
+        public string LastError;
+
+        public void LogError(string message)
+        {
+            LastError = message;
         }
     }
 
