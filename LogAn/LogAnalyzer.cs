@@ -1,4 +1,7 @@
 ﻿using System.IO;
+using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("LogAn.nUnitTests")]
+[assembly: InternalsVisibleTo("LogAn.UnitTests")]
 
 namespace LogAn
 {
@@ -13,7 +16,7 @@ namespace LogAn
             manager = ExtensionManagerFactory.Create();
         }
         
-        public LogAnalyzer(IExtensionManager mgr)
+        internal LogAnalyzer(IExtensionManager mgr)
         {
             manager = mgr;
         }
