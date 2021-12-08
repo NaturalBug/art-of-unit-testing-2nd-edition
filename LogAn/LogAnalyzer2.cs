@@ -24,7 +24,12 @@ namespace LogAn
             }
             catch (Exception e)
             {
-                Email.SendEmail("someone@somewhere.com", "can't log", e.Message);
+                Email.SendEmail(new EmailInfo
+                {
+                    Body = e.Message,
+                    To = "someone@somewhere.com",
+                    Subject = "can't log"
+                });
             }
         }
     }

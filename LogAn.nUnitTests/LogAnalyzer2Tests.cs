@@ -1,4 +1,5 @@
-﻿using NUnit.Framework;
+﻿using FluentAssertions;
+using NUnit.Framework;
 using System;
 
 namespace LogAn.nUnitTests
@@ -18,23 +19,22 @@ namespace LogAn.nUnitTests
 
             log.Analyze(tooShortFileName);
 
-            StringAssert.Contains("someone@somewhere.com", mockEmail.To);
-            StringAssert.Contains("fake exception", mockEmail.Body);
-            StringAssert.Contains("can't log", mockEmail.Subject);
+            mockEmail.Email.Should().BeEquivalentTo(new EmailInfo
+            {
+                Body = "fake exception",
+                To = "someone@somewhere.com",
+                Subject = "can't log"
+            });
         }
     }
 
     internal class FakeEmailService : IEmailService
     {
-        public string To;
-        public string Body;
-        public string Subject;
+        public EmailInfo Email;
 
-        public void SendEmail(string to, string subject, string body)
+        public void SendEmail(EmailInfo emailInfo)
         {
-            To = to;
-            Subject = subject;
-            Body = body;
+            Email = emailInfo;
         }
     }
 }
