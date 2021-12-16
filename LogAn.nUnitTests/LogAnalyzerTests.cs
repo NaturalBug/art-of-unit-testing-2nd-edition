@@ -155,6 +155,16 @@ namespace LogAn.nUnitTests
             logger.Received().LogError("Filename too short: a.txt");
         }
 
+        [Test]
+        public void Returns_ByDefault_WorksForHardCodedArgument()
+        {
+            IFileNameRules fakeRules = Substitute.For<IFileNameRules>();
+
+            fakeRules.IsVaildLogFileName("strict.txt").Returns(true);
+
+            Assert.IsTrue(fakeRules.IsVaildLogFileName("strict.txt"));
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer(new FileExtensionManager());

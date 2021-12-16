@@ -142,6 +142,16 @@ namespace LogAn.UnitTests
 
             logger.Verify(x => x.LogError("Filename too short: a.txt"));
         }
+
+        [Fact]
+        public void Returns_ByDefault_WorksForHardCodedArgument()
+        {
+            Mock<IFileNameRules> fakeRules = new Mock<IFileNameRules>();
+
+            fakeRules.Setup(x => x.IsVaildLogFileName("strict.txt")).Returns(true);
+
+            Assert.True(fakeRules.Object.IsVaildLogFileName("strict.txt"));
+        }
     }
 
     public class FakeWebService : IWebService
