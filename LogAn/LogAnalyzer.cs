@@ -9,8 +9,10 @@ namespace LogAn
     {
         private readonly IExtensionManager manager;
         private readonly IWebService service;
+        private readonly ILogger logger;
 
         public bool WasLastFileNameValid { get; set; }
+        public int MinNameLength { get; set; }
 
         public LogAnalyzer()
         {
@@ -27,6 +29,11 @@ namespace LogAn
             this.service = service;
         }
 
+        public LogAnalyzer(ILogger logger)
+        {
+            this.logger = logger;
+        }
+
         public bool IsVaildLogFileName(string fileName)
         {
             if (manager.IsValid(fileName) && Path.GetFileNameWithoutExtension(fileName).Length >= 5)
@@ -38,10 +45,14 @@ namespace LogAn
             WasLastFileNameValid = false;
             return false;
         }
-
+    
         public void Analyze(string fileName)
         {
-            if (fileName.Length < 8)
+            if (MinNameLength != 0 && fileName.Length < MinNameLength)
+            {
+                logger.LogError($"Filename too short:{fileName}");
+            }
+            else if (fileName.Length < 8)
             {
                 service.LogError("Filename too short:" + fileName);
             }

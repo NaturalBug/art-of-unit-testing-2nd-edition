@@ -140,9 +140,33 @@ namespace LogAn.nUnitTests
             StringAssert.Contains("Filename too short:abc.ext", mockService.LastError);      
         }
 
+        [Test]
+        public void Analyze_TooShortFileName_CallLogger()
+        {
+            FakeLogger logger = new FakeLogger();
+            LogAnalyzer analyzer = new LogAnalyzer(logger)
+            {
+                MinNameLength = 6
+            };
+
+            analyzer.Analyze("a.txt");
+
+            StringAssert.Contains("too short", logger.LastError);
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer(new FileExtensionManager());
+        }
+    }
+
+    public class FakeLogger : ILogger
+    {
+        public string LastError;
+
+        public void LogError(string message)
+        {
+            LastError = message;
         }
     }
 
