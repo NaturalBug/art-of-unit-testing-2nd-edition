@@ -1,4 +1,5 @@
 using FluentAssertions;
+using Moq;
 using System;
 using Xunit;
 
@@ -131,25 +132,15 @@ namespace LogAn.UnitTests
         [Fact]
         public void Analyze_TooShortFileName_CallLogger()
         {
-            FakeLogger logger = new FakeLogger();
-            LogAnalyzer analyzer = new LogAnalyzer(logger)
+            Mock<ILogger> logger = new Mock<ILogger>();
+            LogAnalyzer analyzer = new LogAnalyzer(logger.Object)
             {
                 MinNameLength = 6
             };
 
             analyzer.Analyze("a.txt");
 
-            Assert.Contains("too short", logger.LastError);
-        }
-    }
-
-    public class FakeLogger : ILogger
-    {
-        public string LastError;
-
-        public void LogError(string message)
-        {
-            LastError = message;
+            logger.Verify(x => x.LogError("Filename too short: a.txt"));
         }
     }
 
