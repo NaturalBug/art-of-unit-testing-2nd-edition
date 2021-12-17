@@ -165,6 +165,16 @@ namespace LogAn.nUnitTests
             Assert.IsTrue(fakeRules.IsVaildLogFileName("anything.txt"));
         }
 
+        [Test]
+        public void Reutrns_ArgAny_Throws()
+        {
+            IFileNameRules fakeRules = Substitute.For<IFileNameRules>();
+
+            fakeRules.When(x => x.IsVaildLogFileName(Arg.Any<string>())).Do(context => { throw new Exception("fake exception"); });
+
+            Assert.Throws<Exception>(() => fakeRules.IsVaildLogFileName("anything"));
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer(new FileExtensionManager());

@@ -8,7 +8,8 @@ namespace LogAn.UnitTests
     public class LogAnalyzerTests
     {
         private readonly LogAnalyzer analyzer = new LogAnalyzer(new FileExtensionManager());
-        
+        private readonly Mock<IFileNameRules> fakeRules = new Mock<IFileNameRules>();
+
         [Theory]
         [InlineData("filewithgoodextension.SLF", true)]
         [InlineData("filewithgoodextension.slf", true)]
@@ -27,7 +28,7 @@ namespace LogAn.UnitTests
 
             Assert.True(result);
         }
-        
+
         [Fact]
         public void IsValidLogFileName_ValidFileUpperCased_ReturnsTrue()
         {
@@ -146,11 +147,17 @@ namespace LogAn.UnitTests
         [Fact]
         public void Returns_ByDefault_WorksForHardCodedArgument()
         {
-            Mock<IFileNameRules> fakeRules = new Mock<IFileNameRules>();
-
             fakeRules.Setup(x => x.IsVaildLogFileName(It.IsAny<string>())).Returns(true);
 
             Assert.True(fakeRules.Object.IsVaildLogFileName("anything.txt"));
+        }
+
+        [Fact]
+        public void Returns_ItIsAny_Throws()
+        {
+            fakeRules.Setup(x => x.IsVaildLogFileName(It.IsAny<string>())).Throws(new Exception("fake exception"));
+
+            Assert.Throws<Exception>(() => fakeRules.Object.IsVaildLogFileName("anything"));
         }
     }
 
