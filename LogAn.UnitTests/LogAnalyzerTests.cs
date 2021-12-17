@@ -148,9 +148,9 @@ namespace LogAn.UnitTests
         {
             Mock<IFileNameRules> fakeRules = new Mock<IFileNameRules>();
 
-            fakeRules.Setup(x => x.IsVaildLogFileName("strict.txt")).Returns(true);
+            fakeRules.Setup(x => x.IsVaildLogFileName(It.IsAny<string>())).Returns(true);
 
-            Assert.True(fakeRules.Object.IsVaildLogFileName("strict.txt"));
+            Assert.True(fakeRules.Object.IsVaildLogFileName("anything.txt"));
         }
     }
 

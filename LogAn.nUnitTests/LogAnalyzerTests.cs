@@ -160,9 +160,9 @@ namespace LogAn.nUnitTests
         {
             IFileNameRules fakeRules = Substitute.For<IFileNameRules>();
 
-            fakeRules.IsVaildLogFileName("strict.txt").Returns(true);
+            fakeRules.IsVaildLogFileName(Arg.Any<string>()).Returns(true);
 
-            Assert.IsTrue(fakeRules.IsVaildLogFileName("strict.txt"));
+            Assert.IsTrue(fakeRules.IsVaildLogFileName("anything.txt"));
         }
 
         private LogAnalyzer MakeAnalyer()
