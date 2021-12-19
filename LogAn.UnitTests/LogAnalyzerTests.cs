@@ -182,6 +182,11 @@ namespace LogAn.UnitTests
         {
             MessageToWebService = message;
         }
+
+        public void Write(ErrorInfo message)
+        {
+            throw new NotImplementedException();
+        }
     }
 
     internal class TestableLogAnalyzer : LogAnalyzerUsingFactoryMethod
