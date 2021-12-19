@@ -167,6 +167,8 @@ namespace LogAn.UnitTests
 
         public Exception ToThrow;
 
+        public string MessageToWebService;
+
         public void LogError(string message)
         {
             if (ToThrow != null)
@@ -174,6 +176,11 @@ namespace LogAn.UnitTests
                 throw ToThrow;
             }
             LastError = message;
+        }
+
+        public void Write(string message)
+        {
+            MessageToWebService = message;
         }
     }
 

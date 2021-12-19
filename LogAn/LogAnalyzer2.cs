@@ -6,6 +6,10 @@ namespace LogAn
     {
         public IWebService Service { get; set; }
         public IEmailService Email { get; set; }
+        public int MinNameLength { get; set; }
+
+        private readonly ILogger logger;
+        private readonly IWebService webService;
 
         public LogAnalyzer2(IWebService service, IEmailService email)
         {
@@ -13,23 +17,43 @@ namespace LogAn
             Email = email;
         }
 
-        internal void Analyze(string fileName)
+        public LogAnalyzer2(ILogger logger, IWebService webService)
         {
-            try
+            this.logger = logger;
+            this.webService = webService;
+        }
+
+        public void Analyze(string fileName)
+        {
+            if (fileName.Length < MinNameLength)
             {
-                if (fileName.Length < 8)
+                try
                 {
-                    Service.LogError("Filename too short:" + fileName);
+                    logger.LogError(string.Format("filename too short {0}", fileName));
+                }
+                catch (Exception e)
+                {
+                    webService.Write("Error From Logger: " + e);
                 }
             }
-            catch (Exception e)
+            else
             {
-                Email.SendEmail(new EmailInfo
+                try
                 {
-                    Body = e.Message,
-                    To = "someone@somewhere.com",
-                    Subject = "can't log"
-                });
+                    if (fileName.Length < 8)
+                    {
+                        Service.LogError("Filename too short:" + fileName);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Email.SendEmail(new EmailInfo
+                    {
+                        Body = e.Message,
+                        To = "someone@somewhere.com",
+                        Subject = "can't log"
+                    });
+                }
             }
         }
     }

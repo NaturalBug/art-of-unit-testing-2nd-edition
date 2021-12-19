@@ -26,6 +26,40 @@ namespace LogAn.nUnitTests
                 Subject = "can't log"
             });
         }
+
+        [Test]
+        public void Analyze_LoggerThrows_CallsWebService()
+        {
+            FakeWebService mockWebService = new FakeWebService();
+            var analyer2 = new LogAnalyzer2(new FakeLogger2
+            {
+                WillThrow = new Exception("fake exception")
+            }, mockWebService)
+            {
+                MinNameLength = 8
+            };
+            string tooShortFileName = "abc.ext";
+
+            analyer2.Analyze(tooShortFileName);
+
+            StringAssert.Contains("fake exception", mockWebService.MessageToWebService);
+        }
+    }
+
+    internal class FakeLogger2 : ILogger
+    {
+        public Exception WillThrow = null;
+
+        public string LoggerGotMessage;
+
+        public void LogError(string message)
+        {
+            LoggerGotMessage = message;
+            if (WillThrow != null)
+            {
+                throw WillThrow;
+            }
+        }
     }
 
     internal class FakeEmailService : IEmailService
