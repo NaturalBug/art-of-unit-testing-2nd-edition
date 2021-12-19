@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using NSubstitute;
 using NUnit.Framework;
 using System;
 
@@ -30,35 +31,18 @@ namespace LogAn.nUnitTests
         [Test]
         public void Analyze_LoggerThrows_CallsWebService()
         {
-            FakeWebService mockWebService = new FakeWebService();
-            var analyer2 = new LogAnalyzer2(new FakeLogger2
+            var mockWebService = Substitute.For<IWebService>();
+            var stubLogger = Substitute.For<ILogger>();
+            stubLogger.When(logger => logger.LogError(Arg.Any<string>()))
+                .Do(info => { throw new Exception("fake exception"); });
+            var analyzer = new LogAnalyzer2(stubLogger, mockWebService)
             {
-                WillThrow = new Exception("fake exception")
-            }, mockWebService)
-            {
-                MinNameLength = 8
+                MinNameLength = 10
             };
-            string tooShortFileName = "abc.ext";
 
-            analyer2.Analyze(tooShortFileName);
+            analyzer.Analyze("Short.txt");
 
-            StringAssert.Contains("fake exception", mockWebService.MessageToWebService);
-        }
-    }
-
-    internal class FakeLogger2 : ILogger
-    {
-        public Exception WillThrow = null;
-
-        public string LoggerGotMessage;
-
-        public void LogError(string message)
-        {
-            LoggerGotMessage = message;
-            if (WillThrow != null)
-            {
-                throw WillThrow;
-            }
+            mockWebService.Received().Write(Arg.Is<string>(s => s.Contains("fake exception")));
         }
     }
 

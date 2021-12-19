@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using Moq;
 using System;
 using Xunit;
 
@@ -29,35 +30,17 @@ namespace LogAn.UnitTests
         [Fact]
         public void Analyze_LoggerThrows_CallsWebService()
         {
-            FakeWebService mockWebService = new FakeWebService();
-            var analyzer2 = new LogAnalyzer2(new FakeLogger2
+            var mockWebService = new Mock<IWebService>();
+            var stubLogger = new Mock<ILogger>();
+            stubLogger.Setup(logger => logger.LogError(It.IsAny<string>())).Throws(new Exception("fake exception"));
+            var analyzer = new LogAnalyzer2(stubLogger.Object, mockWebService.Object)
             {
-                WillThrow = new Exception("fake exception")
-            }, mockWebService)
-            {
-                MinNameLength = 8
+                MinNameLength = 10
             };
-            string tooShortFileName = "abc.ext";
 
-            analyzer2.Analyze(tooShortFileName);
+            analyzer.Analyze("Short.txt");
 
-            Assert.Contains("fake exception", mockWebService.MessageToWebService);
-        }
-    }
-
-    internal class FakeLogger2 : ILogger
-    {
-        public Exception WillThrow = null;
-
-        public string LoggerGetMessage;
-
-        public void LogError(string message)
-        {
-            LoggerGetMessage = message;
-            if (WillThrow != null)
-            {
-                throw WillThrow;
-            }
+            mockWebService.Verify(x => x.Write(It.Is<string>(message => message.Contains("fake exception"))));
         }
     }
 
