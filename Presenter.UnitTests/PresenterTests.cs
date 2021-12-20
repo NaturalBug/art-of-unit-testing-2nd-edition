@@ -12,7 +12,7 @@ namespace Presenter.UnitTests
             var mockView = new Mock<IView>();
             Presenter p = new(mockView.Object);
 
-            mockView.Raise(x => x.Loaded += null, new EventArgs());
+            mockView.Raise(x => x.Loaded += null);
 
             mockView.Verify(x => x.Render(It.Is<string>(s => s.Contains("Hello World"))));
         }
