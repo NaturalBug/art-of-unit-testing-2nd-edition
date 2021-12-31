@@ -5,7 +5,7 @@ using Xunit;
 
 namespace LogAn.UnitTests
 {
-    public class LogAnalyzerTests
+    public class LogAnalyzerTests : BaseTestsClass
     {
         private readonly LogAnalyzer analyzer = new LogAnalyzer(new FileExtensionManager());
         private readonly Mock<IFileNameRules> fakeRules = new Mock<IFileNameRules>();
@@ -124,7 +124,7 @@ namespace LogAn.UnitTests
             FakeWebService mockService = new FakeWebService();
             LogAnalyzer log = new LogAnalyzer(mockService);
             string tooShortFileName = "abc.ext";
-            LoggingFacility.Logger = new Mock<ILogger>().Object;
+            FakeTheLogger();
 
             log.Analyze(tooShortFileName);
 
@@ -164,6 +164,7 @@ namespace LogAn.UnitTests
         [Fact]
         public void Analyze_EmptyFile_ThrowException()
         {
+            FakeTheLogger();
             LogAnalyzer la = new LogAnalyzer();
 
             Assert.Throws<Exception>(() => la.Analyze("myemptyfile.txt"));

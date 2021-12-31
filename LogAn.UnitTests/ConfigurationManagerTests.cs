@@ -1,14 +1,14 @@
-﻿using Moq;
-using Xunit;
+﻿using Xunit;
 
 namespace LogAn.UnitTests
 {
-    public class ConfigurationManagerTests
+    public class ConfigurationManagerTests : BaseTestsClass
     {
+
         [Fact]
         public void IsConfigured_Always_ReturnsTrue()
         {
-            LoggingFacility.Logger = new Mock<ILogger>().Object;
+            FakeTheLogger();
             ConfigurationManager cm = new ConfigurationManager();
 
             bool configured = cm.IsConfigured("something");

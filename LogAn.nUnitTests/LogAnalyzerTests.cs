@@ -5,7 +5,7 @@ using System;
 namespace LogAn.nUnitTests
 {
     [TestFixture]
-    public class LogAnalyzerTests
+    public class LogAnalyzerTests : BaseTestsClass
     {
         [TestCase("filewithgoodextension.SLF", true)]
         [TestCase("filewithgoodextension.slf", true)]
@@ -135,7 +135,7 @@ namespace LogAn.nUnitTests
             FakeWebService mockService = new FakeWebService();
             LogAnalyzer log = new LogAnalyzer(mockService);
             string tooShortFileName = "abc.ext";
-            LoggingFacility.Logger = Substitute.For<ILogger>();
+            FakeTheLogger();
 
             log.Analyze(tooShortFileName);
 
@@ -179,15 +179,10 @@ namespace LogAn.nUnitTests
         [Test]
         public void Analyze_EmptyFile_ThrowException()
         {
+            FakeTheLogger();
             LogAnalyzer la = new LogAnalyzer();
 
             Assert.Throws<Exception>(() => la.Analyze("myemptyfile.txt"));
-        }
-
-        [TearDown]
-        public void TearDown()
-        {
-            LoggingFacility.Logger = null;
         }
 
         private LogAnalyzer MakeAnalyer()
