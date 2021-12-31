@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Runtime.CompilerServices;
 [assembly: InternalsVisibleTo("LogAn.nUnitTests")]
 [assembly: InternalsVisibleTo("LogAn.UnitTests")]
@@ -55,6 +56,11 @@ namespace LogAn
             else if (fileName.Length < 8)
             {
                 service.LogError("Filename too short:" + fileName);
+                LoggingFacility.Log("Filename too short:" + fileName);
+            }
+            else
+            {
+                throw new Exception();
             }
         }
     }

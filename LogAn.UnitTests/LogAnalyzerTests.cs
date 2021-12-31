@@ -124,6 +124,7 @@ namespace LogAn.UnitTests
             FakeWebService mockService = new FakeWebService();
             LogAnalyzer log = new LogAnalyzer(mockService);
             string tooShortFileName = "abc.ext";
+            LoggingFacility.Logger = new Mock<ILogger>().Object;
 
             log.Analyze(tooShortFileName);
 
@@ -158,6 +159,14 @@ namespace LogAn.UnitTests
             fakeRules.Setup(x => x.IsVaildLogFileName(It.IsAny<string>())).Throws(new Exception("fake exception"));
 
             Assert.Throws<Exception>(() => fakeRules.Object.IsVaildLogFileName("anything"));
+        }
+
+        [Fact]
+        public void Analyze_EmptyFile_ThrowException()
+        {
+            LogAnalyzer la = new LogAnalyzer();
+
+            Assert.Throws<Exception>(() => la.Analyze("myemptyfile.txt"));
         }
     }
 
