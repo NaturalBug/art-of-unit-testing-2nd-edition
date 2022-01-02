@@ -1,40 +1,14 @@
-﻿using NUnit.Framework;
-
-namespace StringParser.nUnitTests
+﻿namespace StringParser.nUnitTests
 {
-    class XmlStringParserTests : TemplateStringParserTests
+    class XmlStringParserTests : FillInTheBlankStringParserTests
     {
-        [Test]
-        public override void TestGetStringVersionFromHeader_SingleDigit_Found()
-        {
-            IStringParser parser = GetParser("<Header>1</Header>");
+        protected override string HeaderVersion_SingleDigit { get { return $"<Header>{EXPECTED_SINGLE_DIGIT}</Header>"; } }
 
-            string versionFromHeader = parser.GetStringVersionFromHeader();
+        protected override string HeaderVersion_WithMiniorVersion { get { return $"<Header>{EXPECTED_WITH_MINORVERSION}</Header>"; } }
 
-            Assert.AreEqual("1", versionFromHeader);
-        }
+        protected override string HeaderVersion_WithRevision { get { return $"<Header>{EXPECTED_WITH_REVISION}</Header>"; } }
 
-        [Test]
-        public override void TestGetStringVersionFromHeader_WithMinorVersion_Found()
-        {
-            IStringParser parser = GetParser("<Header>1.1</Header>");
-
-            string versionFromHeader = parser.GetStringVersionFromHeader();
-
-            Assert.AreEqual("1.1", versionFromHeader);
-        }
-
-        [Test]
-        public override void TestGetStringVersionFromHeader_WithRevision_Found()
-        {
-            IStringParser parser = GetParser("<Header>1.1.1</Header>");
-
-            string versionFromHeader = parser.GetStringVersionFromHeader();
-
-            Assert.AreEqual("1.1.1", versionFromHeader);
-        }
-        
-        private static IStringParser GetParser(string input)
+        protected override IStringParser GetParser(string input)
         {
             return new XMLStringParser(input);
         }

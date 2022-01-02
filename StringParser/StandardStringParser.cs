@@ -10,7 +10,7 @@ namespace StringParser
 
         public override string GetStringVersionFromHeader()
         {
-            return Regex.Match(StringToParse, @"header;version=(?<version>[^;]+)").Groups["version"].Value;
+            return Regex.Match(StringToParse, @"header\tversion=(?<version>[^\t]+)").Groups["version"].Value;
         }
     }
 }

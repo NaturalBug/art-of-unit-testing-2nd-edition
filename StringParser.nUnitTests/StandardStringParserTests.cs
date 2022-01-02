@@ -1,45 +1,16 @@
-using NUnit.Framework;
-
 namespace StringParser.nUnitTests
 {
-    public class StandardStrinParserTests : TemplateStringParserTests
+    public class StandardStrinParserTests : FillInTheBlankStringParserTests
     {
-        private static StandardStringParser GetParser(string input)
+        protected override string HeaderVersion_SingleDigit { get { return $"header\tversion={EXPECTED_SINGLE_DIGIT}\t\n"; } }
+
+        protected override string HeaderVersion_WithMiniorVersion { get { return $"header\tversion={EXPECTED_WITH_MINORVERSION}\t\n"; } }
+
+        protected override string HeaderVersion_WithRevision { get { return $"header\tversion={EXPECTED_WITH_REVISION}\t\n"; } }
+
+        protected override IStringParser GetParser(string input)
         {
             return new StandardStringParser(input);
-        }
-
-        [Test]
-        public override void TestGetStringVersionFromHeader_SingleDigit_Found()
-        {
-            string input = "header;version=1;\n";
-            StandardStringParser parser = GetParser(input);
-
-            string versionFromHeader = parser.GetStringVersionFromHeader();
-
-            Assert.AreEqual("1", versionFromHeader);
-        }
-
-        [Test]
-        public override void TestGetStringVersionFromHeader_WithMinorVersion_Found()
-        {
-            string input = "header;version=1.1;\n";
-            StandardStringParser parser = GetParser(input);
-
-            string versionFromHeader = parser.GetStringVersionFromHeader();
-
-            Assert.AreEqual("1.1", versionFromHeader);
-        }
-
-        [Test]
-        public override void TestGetStringVersionFromHeader_WithRevision_Found()
-        {
-            string input = "header;version=1.1.1;\n";
-            StandardStringParser parser = GetParser(input);
-
-            string versionFromHeader = parser.GetStringVersionFromHeader();
-
-            Assert.AreEqual("1.1.1", versionFromHeader);
         }
     }
 }
