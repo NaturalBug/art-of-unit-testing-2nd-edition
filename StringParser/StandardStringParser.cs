@@ -2,18 +2,15 @@
 
 namespace StringParser
 {
-    public class StandardStringParser
+    public class StandardStringParser : BaseStringParser
     {
-        private readonly string input;
-
-        public StandardStringParser(string input)
+        public StandardStringParser(string stringToParse): base(stringToParse)
         {
-            this.input = input;
         }
 
-        public string GetStringVersionFromHeader()
+        public override string GetStringVersionFromHeader()
         {
-            return Regex.Match(input, @"header;version=(?<version>[^;]+)").Groups["version"].Value;
+            return Regex.Match(StringToParse, @"header;version=(?<version>[^;]+)").Groups["version"].Value;
         }
     }
 }
