@@ -4,5 +4,6 @@
     {
         string StringToParse { get; }
         string GetStringVersionFromHeader();
+        bool HasCorrectHeader();
     }
 }

@@ -10,5 +10,7 @@
         }
 
         public abstract string GetStringVersionFromHeader();
+
+        public abstract bool HasCorrectHeader();
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Xml;
+﻿using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace StringParser
 {
@@ -13,6 +14,11 @@ namespace StringParser
             var XmlDoc = new XmlDocument();
             XmlDoc.LoadXml(StringToParse);
             return XmlDoc.SelectSingleNode("Header").InnerText;
+        }
+
+        public override bool HasCorrectHeader()
+        {
+            return Regex.IsMatch(StringToParse, @"<Header>.+</Header>");
         }
     }
 }
