@@ -171,14 +171,36 @@ namespace LogAn.UnitTests
         }
 
         [Fact]
-        public void SemanticsChange()
+        public void IsValid_LengthNoBiggerThan3_ReturnsFalse()
         {
-            LogAnalyzer logan = MakeDefaultAnalyzer();
+            LogAnalyzer logan = GetNewAnalyzer();
 
-            Assert.False(logan.IsValid("abc"));
+            bool isValid = logan.IsValid("abc");
+
+            Assert.False(isValid);
         }
 
-        private static LogAnalyzer MakeDefaultAnalyzer()
+        [Fact]
+        public void IsValid_LengthBiggerThan8_IsFalse()
+        {
+            LogAnalyzer logan = GetNewAnalyzer();
+
+            bool valid = logan.IsValid("123456789");
+
+            Assert.False(valid);
+        }
+
+        [Fact]
+        public void IsValid_LengthSmallerThan8_IsTrue()
+        {
+            LogAnalyzer logan = GetNewAnalyzer();
+
+            bool valid = logan.IsValid("1234567");
+
+            Assert.True(valid);
+        }
+
+        private static LogAnalyzer GetNewAnalyzer()
         {
             LogAnalyzer analyzer = new LogAnalyzer();
             analyzer.Initialize();

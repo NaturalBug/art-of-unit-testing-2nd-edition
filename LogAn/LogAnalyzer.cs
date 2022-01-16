@@ -69,11 +69,15 @@ namespace LogAn
         {
             if (!isInitialized)
             {
-                throw new Exception();
+                throw new NotInitializedException("The analyzer.Initialize() method should be called before any other opertaion!");
+            }
+
+            if (fileName.Length < 8 && fileName.Length > 3)
+            {
+                return true;
             }
 
             return false;
-
         }
 
         public void Initialize()
