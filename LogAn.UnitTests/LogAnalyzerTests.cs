@@ -9,6 +9,13 @@ namespace LogAn.UnitTests
     {
         private readonly LogAnalyzer analyzer = new LogAnalyzer(new FileExtensionManager());
         private readonly Mock<IFileNameRules> fakeRules = new Mock<IFileNameRules>();
+        private LogAnalyzer logan;
+
+        public LogAnalyzerTests()
+        {
+            logan = new LogAnalyzer();
+            logan.Initialize();
+        }
 
         [Theory]
         [InlineData("filewithgoodextension.SLF", true)]
@@ -183,8 +190,6 @@ namespace LogAn.UnitTests
         [Fact]
         public void IsValid_LengthBiggerThan8_IsFalse()
         {
-            LogAnalyzer logan = GetNewAnalyzer();
-
             bool valid = logan.IsValid("123456789");
 
             Assert.False(valid);
@@ -193,8 +198,6 @@ namespace LogAn.UnitTests
         [Fact]
         public void IsValid_LengthSmallerThan8_IsTrue()
         {
-            LogAnalyzer logan = GetNewAnalyzer();
-
             bool valid = logan.IsValid("1234567");
 
             Assert.True(valid);

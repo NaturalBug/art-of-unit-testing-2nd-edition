@@ -7,6 +7,15 @@ namespace LogAn.nUnitTests
     [TestFixture]
     public class LogAnalyzerTests : BaseTestsClass
     {
+        private LogAnalyzer logan;
+
+        [SetUp]
+        public void Setup()
+        {
+            logan = new LogAnalyzer();
+            logan.Initialize();
+        }
+
         [TestCase("filewithgoodextension.SLF", true)]
         [TestCase("filewithgoodextension.slf", true)]
         [TestCase("filewithbadextension.foo", false)]
@@ -198,8 +207,6 @@ namespace LogAn.nUnitTests
         [Test]
         public void IsValid_LengthBiggerThan8_IsFalse()
         {
-            LogAnalyzer logan = GetNewAnalyzer();
-
             bool valid = logan.IsValid("123456789");
 
             Assert.IsFalse(valid);
@@ -208,8 +215,6 @@ namespace LogAn.nUnitTests
         [Test]
         public void IsValid_LengthSmallerThan8_IsTrue()
         {
-            LogAnalyzer logan = GetNewAnalyzer();
-
             bool valid = logan.IsValid("1234567");
 
             Assert.IsTrue(valid);
