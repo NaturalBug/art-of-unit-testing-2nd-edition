@@ -11,6 +11,7 @@ namespace LogAn
         private readonly IExtensionManager manager;
         private readonly IWebService service;
         private readonly ILogger logger;
+        private bool isInitialized;
 
         public bool WasLastFileNameValid { get; set; }
         public int MinNameLength { get; set; }
@@ -19,7 +20,7 @@ namespace LogAn
         {
             manager = ExtensionManagerFactory.Create();
         }
-        
+
         internal LogAnalyzer(IExtensionManager mgr)
         {
             manager = mgr;
@@ -46,7 +47,7 @@ namespace LogAn
             WasLastFileNameValid = false;
             return false;
         }
-    
+
         public void Analyze(string fileName)
         {
             if (MinNameLength != 0 && fileName.Length < MinNameLength)
@@ -66,7 +67,18 @@ namespace LogAn
 
         public bool IsValid(string fileName)
         {
+            if (!isInitialized)
+            {
+                throw new Exception();
+            }
+
             return false;
+
+        }
+
+        public void Initialize()
+        {
+            isInitialized = true;
         }
     }
 

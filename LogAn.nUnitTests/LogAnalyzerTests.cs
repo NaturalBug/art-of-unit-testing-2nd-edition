@@ -189,6 +189,7 @@ namespace LogAn.nUnitTests
         public void SemanticsChange()
         {
             LogAnalyzer logan = new LogAnalyzer();
+            logan.Initialize();
 
             Assert.IsFalse(logan.IsValid("abc"));
         }
