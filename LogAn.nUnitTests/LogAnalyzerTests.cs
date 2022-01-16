@@ -188,10 +188,16 @@ namespace LogAn.nUnitTests
         [Test]
         public void SemanticsChange()
         {
-            LogAnalyzer logan = new LogAnalyzer();
-            logan.Initialize();
+            LogAnalyzer logan = MakeDefaultAnalyzer();
 
             Assert.IsFalse(logan.IsValid("abc"));
+        }
+
+        private static LogAnalyzer MakeDefaultAnalyzer()
+        {
+            LogAnalyzer analyzer = new LogAnalyzer();
+            analyzer.Initialize();
+            return analyzer;
         }
 
         private LogAnalyzer MakeAnalyer()

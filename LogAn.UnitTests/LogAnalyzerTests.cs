@@ -173,10 +173,16 @@ namespace LogAn.UnitTests
         [Fact]
         public void SemanticsChange()
         {
-            LogAnalyzer logan = new LogAnalyzer();
-            logan.Initialize();
+            LogAnalyzer logan = MakeDefaultAnalyzer();
 
             Assert.False(logan.IsValid("abc"));
+        }
+
+        private static LogAnalyzer MakeDefaultAnalyzer()
+        {
+            LogAnalyzer analyzer = new LogAnalyzer();
+            analyzer.Initialize();
+            return analyzer;
         }
     }
 
