@@ -169,6 +169,14 @@ namespace LogAn.UnitTests
 
             Assert.Throws<Exception>(() => la.Analyze("myemptyfile.txt"));
         }
+
+        [Fact]
+        public void SemanticsChange()
+        {
+            LogAnalyzer logan = new LogAnalyzer();
+
+            Assert.False(logan.IsValid("abc"));
+        }
     }
 
     public class FakeWebService : IWebService

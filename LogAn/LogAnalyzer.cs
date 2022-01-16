@@ -63,6 +63,11 @@ namespace LogAn
                 throw new Exception();
             }
         }
+
+        public bool IsValid(string fileName)
+        {
+            return false;
+        }
     }
 
     public class LogAnalyzerUsingFactoryMethod

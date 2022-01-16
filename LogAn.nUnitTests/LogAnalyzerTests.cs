@@ -185,6 +185,14 @@ namespace LogAn.nUnitTests
             Assert.Throws<Exception>(() => la.Analyze("myemptyfile.txt"));
         }
 
+        [Test]
+        public void SemanticsChange()
+        {
+            LogAnalyzer logan = new LogAnalyzer();
+
+            Assert.IsFalse(logan.IsValid("abc"));
+        }
+
         private LogAnalyzer MakeAnalyer()
         {
             return new LogAnalyzer(new FileExtensionManager());
