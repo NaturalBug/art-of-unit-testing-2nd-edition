@@ -220,7 +220,6 @@ namespace LogAn.nUnitTests
             Assert.IsTrue(valid);
         }
 
-
         private static LogAnalyzer GetNewAnalyzer()
         {
             LogAnalyzer analyzer = new LogAnalyzer();
